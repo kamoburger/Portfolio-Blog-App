@@ -1,0 +1,187 @@
+.main {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 100vw;
+    font-size: 62.5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444444;
+    background-color: #F0F4F3;
+    min-height: 100vh;
+    height: 100%;
+    padding-bottom: 200px;
+}
+
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 50%;
+    margin-top: 120px;
+    margin-bottom: 48px;
+    box-shadow: 0px 0px 5px 3px #E8EBEA;
+}
+
+.header {
+    width: 100%;
+}
+
+.blogTitle {
+    display: flex;
+    font-size: 1.3rem;
+    font-weight: bold;
+    align-items: center;
+    background-color: #444444;
+    width: 100%;
+    color: #FFFFFF;
+    height: 48px;
+    padding-left: 15px;
+    border-top: 3px solid #34B792;
+}
+
+.h1 {
+    font-size: 1.4rem;
+    margin-top: 3px;
+}
+
+.faBars {
+    margin-right: 10px;
+}
+
+.blog {
+    font-size: 1.3rem;
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid #E2E2E2;
+}
+
+.topUi {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user {
+    display: flex;
+}
+
+.faUser {
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+.underUi {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.date {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toDetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #0074E0;
+}
+
+.faClock {
+    margin-right: 10px;
+}
+
+.return {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px;
+}
+
+.edit {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px;
+}
+
+.detele {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px;
+}
+
+.faArrowLeft {
+    margin-right: 10px;
+}
+
+.faPenToSquare {
+    margin-right: 10px;
+}
+
+.faTrash {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .main {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        width: 100vw;
+        font-size: 62.5%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #444444;
+        background-color: #F0F4F3;
+        min-height: 100vh;
+        height: 100%;
+    }
+    
+    .container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 100px;
+        margin-bottom: 38px;
+        box-shadow: 0px 0px 5px 3px #E8EBEA;
+    }
+
+    .detailMessage {
+        font-size: 0px;
+    }
+
+    .detailMessage::before {
+        font-size: 1.3rem;
+        content:'詳細';
+    }
+
+    .underUi {
+        flex-flow: column;
+    }
+
+    .date {
+        display: flex;
+        justify-content: left;
+    }
+
+    .toDetail {
+        margin-top: 20px;
+    }
+
+}
