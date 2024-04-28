@@ -9,7 +9,13 @@ import { Router, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Footer from '@/components/Footer/Footer';
 
+import { useSearchParams } from "next/navigation";
+
 export default function Index() {
+
+    const searchParams = useSearchParams();
+    const flashMassage = searchParams.get("flashMassage");
+    const status = searchParams.get("status");
 
     const [data, setData] = useState([])
     const [deleteToggle, setDeleteToggle] = useState(false)
@@ -19,7 +25,6 @@ export default function Index() {
 
     useEffect(() => {
 
-        setHaveQuery(router.query)
         fetch("https://cf483374.cloudfree.jp/backend/api/blogs")
         .then((res) => res.json())
         .then((json) => setData(json))
@@ -61,23 +66,23 @@ export default function Index() {
                         <FontAwesomeIcon icon={faBars} className={sx.faBars}/>
                         <h1 className={sx.h1}>ブログ一覧</h1>
                     </div>
-                    {haveQuery ? 
-                        Object.keys(haveQuery).length !== 0 && router.query.status === "success" ? (
+                    {flashMassage ? 
+                        status === "success" ? (
                             <div className={sx.successMassage}>
                                 <div className={sx.successWrapper}>
                                     <FontAwesomeIcon icon={faCircleExclamation} />
-                                    <p className={sx.resultMassage}>{router.query.flashMassage}</p>
+                                    <p className={sx.resultMassage}>{flashMassage}</p>
                                 </div>
                             </div>
                         ) : <p></p> : 
                     <p></p>}
 
-                    {haveQuery ? 
-                        Object.keys(haveQuery).length !== 0 && router.query.status === "failure" ? (
+                    {flashMassage ? 
+                        status === "failure" ? (
                             <div className={sx.failureMassage}>
                                 <div className={sx.failureWrapper}>
                                     <FontAwesomeIcon icon={faCircleExclamation} className={sx.faCircleExclamation}/>
-                                    <p className={sx.resultMassage}>{router.query.flashMassage}</p>
+                                    <p className={sx.resultMassage}>{flashMassage}</p>
                                 </div>
                             </div>
                         ) : <p></p> : 

@@ -40,6 +40,11 @@
     border-top: 3px solid #34B792;
 }
 
+.h1 {
+    font-size: 1.4rem;
+    margin-top: 3px;
+}
+
 .faBars {
     margin-right: 10px;
 }

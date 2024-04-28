@@ -40,7 +40,8 @@ export default function Detail({params}) {
         e.preventDefault();
 
         const body = { title: data.title, content: data.content }
-        router.push({ pathname: `/edit/${id}`, query: body });
+        const URLbody = new URLSearchParams(body)
+        router.push(`/edit/${id}?${URLbody}`);
 
     }
 
@@ -58,14 +59,16 @@ export default function Detail({params}) {
                 .then((res) => {
                     if (res.status === 200) {
                         const flashMassage = { flashMassage: "ブログを削除しました", status: "success" }
-                        router.push({ pathname: "/", query: flashMassage }, "/");
+                        const URLflashMassage = new URLSearchParams(flashMassage)
+                        router.push(`/?${URLflashMassage}`);
                     } else {
                         throw new Error;
                     }
                 })
                 .catch(() => {
                     const flashMassage = { flashMassage: "ブログの削除に失敗しました", status: "failure" }
-                    router.push({ pathname: "/", query: flashMassage }, "/");
+                    const URLflashMassage = new URLSearchParams(flashMassage)
+                    router.push(`/?${URLflashMassage}`);
                 });
 
         } else {
