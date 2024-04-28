@@ -4,11 +4,14 @@ import { faArrowRight, faBars, faUser, faCircleExclamation, faArrowLeft, faPenTo
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import Header from '@/components/Header/Header';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import sx from "../../../styles/detail.module.css"
 import Footer from '@/components/Footer/Footer';
 
 export default function Detail({params}) {
+
+    const router = useRouter();
 
     const [data, setData] = useState({})
     const [fetchFailure, setFetchFailure] = useState(false)
