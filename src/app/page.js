@@ -1,58 +1,45 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faBars, faUser, faCircleExclamation, faBlog, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faBars, faUser, faCircleExclamation, faBlog, faCircleInfo, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import sx from "../styles/Home.module.css"
 import Header from '@/components/Header/Header';
 import Link from 'next/link';
 import { Router, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import Footer from '@/components/Footer/Footer';
 
 import { useSearchParams } from "next/navigation";
 
 export default function Index() {
 
-    const searchParams = useSearchParams();
-    const flashMassage = searchParams.get("flashMassage");
-    const status = searchParams.get("status");
+    const router = useRouter()
+
+    const searchParams = useSearchParams()
+    const flashMassage = searchParams.get("flashMassage")
+    const status = searchParams.get("status")
 
     const [data, setData] = useState([])
     const [deleteToggle, setDeleteToggle] = useState(false)
-    const [haveQuery, setHaveQuery] = useState({})
-    const router = useRouter();
     const [isFetched, setIsFetched] = useState(false)
+    const [isFailured, setIsFailured] = useState(false)
 
     useEffect(() => {
 
         fetch("https://cf483374.cloudfree.jp/backend/api/blogs")
         .then((res) => res.json())
         .then((json) => setData(json))
-        .catch(() => alert("error"))
+        .catch(() => setIsFailured(true))
         .finally(() => {
             setIsFetched(true)
         });
         
     }, [deleteToggle])
 
-    const handleDelete = async(e, id, title) => {
-
+    const handleReload = (e) => {
         e.preventDefault();
-
-        const result = window.confirm(`記事「${title}」を削除してもよろしいですか？`);
-
-        if (result) {
-
-            const url = `https://cf483374.cloudfree.jp/backend/api/delete/${id}`;
-
-            await fetch(url, {method: 'POST'});
-
-            setDeleteToggle((deleteToggle) => !deleteToggle)
-
-        } else {
-            return
-        }
-    }
+        window.location.reload()
+    } 
 
     return (
         <><title>【ポートフォリオサイト】ブログ一覧</title>
@@ -60,13 +47,41 @@ export default function Index() {
             <div className={sx.header}>
                 <Header></Header>
             </div>
-            {data.length !== 0 ? (
+            {isFailured ? 
+                <><div className={sx.container}>
+                            <div className={sx.blogTitle}>
+                                <FontAwesomeIcon icon={faBars} className={sx.faBars}/>
+                                <h1 className={sx.h1}>ブログ一覧</h1>
+                            </div>
+                            <div className={sx.failureMassage}>
+                                <div className={sx.failureWrapper}>
+                                    <FontAwesomeIcon icon={faCircleExclamation} />
+                                    <p className={sx.resultMassage}>ブログの取得に失敗しました</p>
+                                </div>
+                            </div>
+                            <Link href={"/"} className={sx.blog} onClick={(e) => handleReload(e)}>
+                                <div className={sx.dbError}>
+                                    <h1 className={sx.dbErrorMessage}>データベースに接続できませんでした</h1>
+                                </div>
+                                <div className={sx.dbSub}>
+                                    <h2 className={sx.dbSubMessage}>以下の手順をお試しください</h2>
+                                </div>
+                                <p className={sx.infoMessage}>お使いのブラウザの <FontAwesomeIcon icon={faRotateRight} /> 再読み込みボタン、もしくはこのセクションをクリックしてページを再読み込みを行ってください</p>
+                                <div className={sx.underUi}>
+                                    <div className={sx.toDetail}>
+                                        <FontAwesomeIcon icon={faArrowRight} className={sx.faArrowRight}/>
+                                        <p>クリックしてページを再読み込み</p>
+                                    </div>
+                                </div>
+                            </Link>
+                </div></> : <p></p>}
+            {data.length !== 0 && !isFailured ? (
                 <div className={sx.container}>
                     <div className={sx.blogTitle}>
                         <FontAwesomeIcon icon={faBars} className={sx.faBars}/>
                         <h1 className={sx.h1}>ブログ一覧</h1>
                     </div>
-                    {flashMassage ? 
+                    {searchParams.size !== 0 ? 
                         status === "success" ? (
                             <div className={sx.successMassage}>
                                 <div className={sx.successWrapper}>
@@ -77,7 +92,7 @@ export default function Index() {
                         ) : <p></p> : 
                     <p></p>}
 
-                    {flashMassage ? 
+                    {searchParams.size !== 0 ? 
                         status === "failure" ? (
                             <div className={sx.failureMassage}>
                                 <div className={sx.failureWrapper}>
@@ -122,39 +137,37 @@ export default function Index() {
                         )
                     }) : <p></p>}
                 </div>
-                ) : 
-                    <div className={sx.container}>
-                        {isFetched && isFetched ? 
-                            <>
-                                <div className={sx.blogTitle}>
-                                    <FontAwesomeIcon icon={faBars} className={sx.faBars}/>
-                                    <h1 className={sx.h1}>ブログ一覧</h1>
+                ) : isFetched && !isFailured ? 
+                        <div className={sx.container}>
+                            <div className={sx.blogTitle}>
+                                <FontAwesomeIcon icon={faBars} className={sx.faBars}/>
+                                <h1 className={sx.h1}>ブログ一覧</h1>
+                            </div>
+                            <div className={sx.failureMassage}>
+                                <div className={sx.failureWrapper}>
+                                    <FontAwesomeIcon icon={faCircleExclamation} />
+                                    <p className={sx.resultMassage}>ブログが投稿されていません</p>
                                 </div>
-                                <div className={sx.failureMassage}>
-                                    <div className={sx.failureWrapper}>
-                                        <FontAwesomeIcon icon={faCircleExclamation} />
-                                        <p className={sx.resultMassage}>ブログが投稿されていません</p>
+                            </div>
+                            <Link href={`/post`} className={sx.blog}>
+                                <div className={sx.welcome}>
+                                    <h1 className={sx.welcomeMessage}>PortFolioへようこそ！</h1>
+                                </div>
+                                <div className={sx.recomend}>
+                                    <h2 className={sx.recomendMessage}>まずはブログを投稿しましょう！</h2>
+                                </div>
+                                <p className={sx.infoMessage}>ページ上部の「投稿フォーム」、もしくはこのセクションをクリックしてブログの投稿を始めましょう！</p>
+                                <div className={sx.underUi}>
+                                    <div className={sx.toDetail}>
+                                        <FontAwesomeIcon icon={faArrowRight} className={sx.faArrowRight}/>
+                                        <p>クリックして投稿を始める</p>
                                     </div>
                                 </div>
-                                <Link href={`/post`}className={sx.blog}>
-                                    <div className={sx.welcome}>
-                                        <h1 className={sx.welcomeMessage}>PortFolioへようこそ！</h1>
-                                    </div>
-                                    <div className={sx.recomend}>
-                                        <h2 className={sx.recomendMessage}>まずはブログを投稿しましょう！</h2>
-                                    </div>
-                                    <p className={sx.infoMessage}>ページ上部の「投稿フォーム」、もしくはこのセクションをクリックしてブログの投稿を始めましょう！</p>
-                                    <div className={sx.underUi}>
-                                        <div className={sx.toDetail}>
-                                            <FontAwesomeIcon icon={faArrowRight} className={sx.faArrowRight}/>
-                                            <p>クリックして投稿を始める</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </> : <p></p>}
-                    </div>
+                            </Link>
+                        </div> : <p></p>
                 }
-            {isFetched && isFetched ? <Footer></Footer> : <p></p>}
+
+            <Footer></Footer>
         </main></>
     )
 }

@@ -168,7 +168,7 @@
 .welcome {
     display: flex;
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 1.0rem;
     color: #34B792;
 }
 
@@ -176,8 +176,23 @@
     display: flex;
     font-weight: bold;
     margin-top: 20px;
-    font-size: 1.4rem;
+    font-size: 0.8rem;
     color: #34B792;
+}
+
+.dbError {
+    display: flex;
+    font-weight: bold;
+    font-size: 1.0rem;
+    color: #FF0000;
+}
+
+.dbSub {
+    display: flex;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #FF0000;
 }
 
 .fablog {

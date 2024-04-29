@@ -155,8 +155,8 @@ export default function Edit({params}) {
                             <p>戻る</p>
                         </Link>
                     </div>
-                </div>
-            {isFetched && isLoaded ? <Footer></Footer> : <p></p>} </> : <p></p>}
+                </div></> : <p></p>}
+            <Footer></Footer>
         </main></>
     )
 }

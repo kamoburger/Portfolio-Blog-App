@@ -151,9 +151,8 @@ export default function Post() {
                             <p>戻る</p>
                         </Link>
                     </div>
-                </div>
-                {isFetched && isFetched ? <Footer></Footer> : <p></p>}
-            </> : <p></p>}
+                </div></> : <p></p>}
+            <Footer></Footer>
         </main></>
     );
 }

@@ -150,7 +150,7 @@ export default function Detail({params}) {
                     return <p></p>
                 }
             })()}
-            {isFetched && isFetched ? <Footer></Footer> : <p></p>}
+            <Footer></Footer>
         </main></>
     )
 }
