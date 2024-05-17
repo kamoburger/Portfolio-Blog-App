@@ -172,6 +172,10 @@
     color: #34B792;
 }
 
+.welcomeMessage {
+    font-size: 1.8rem;
+}
+
 .recomend {
     display: flex;
     font-weight: bold;
